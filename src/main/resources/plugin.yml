@@ -1,0 +1,5 @@
+name: AmcAddon
+version: "1.0"
+author: xHexed
+main: com.mc3f.amcaddon.AmcAddon
+softdepend: [AdvancedMonthlyCrates]
