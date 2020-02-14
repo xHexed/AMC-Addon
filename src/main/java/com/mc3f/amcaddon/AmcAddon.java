@@ -20,7 +20,10 @@ public class AmcAddon extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CommandListener(this), this);
     }
 
-    @Override public void onDisable() { }
+    @Override
+    public void onDisable() {
+        HandlerList.unregisterAll(plugin);
+    }
 
     public final HashSet<String> getAmcCommands() { return amc_commands; }
 }
