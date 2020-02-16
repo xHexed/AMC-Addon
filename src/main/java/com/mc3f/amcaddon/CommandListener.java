@@ -40,12 +40,7 @@ public class CommandListener implements Listener {
     @EventHandler
     public void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
         if (e.getMessage().length() < 1 || e.getPlayer().isOp()) return;
-        final String command = e.getMessage().substring(1).trim();
-        if (command.substring(0, (command.contains(" ") ? command.indexOf(" ") : command.length() - 1)).contains(":")) {
-            e.getPlayer().sendMessage("Lệnh không hợp lệ. /help để xem trợ giúp");
-            e.setCancelled(true);
-        }
-        writefile(command, e.getPlayer().getName());
+        writefile(e.getMessage().substring(1).trim(), e.getPlayer().getName());
     }
 
     @EventHandler
