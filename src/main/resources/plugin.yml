@@ -1,5 +1,5 @@
 name: AmcAddon
-version: "1.0"
+version: ${project.version}
 author: xHexed
 main: com.mc3f.amcaddon.AmcAddon
-softdepend: [AdvancedMonthlyCrates]
+depend: [AdvancedMonthlyCrates]

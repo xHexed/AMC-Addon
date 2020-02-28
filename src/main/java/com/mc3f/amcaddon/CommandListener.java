@@ -14,20 +14,15 @@ import java.util.Date;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class CommandListener implements Listener {
-    private final AmcAddon plugin;
-    public CommandListener(AmcAddon plugin) { this.plugin = plugin; }
-
-    private void writefile(final String command, final String sender) {
+    private static void writefile(final String command, final String sender) {
         final File file = new File("plugins/AdvancedMonthlyCrates", "log.txt");
-        //noinspection ALL
         file.getParentFile().mkdirs();
-        for (final String amc : plugin.getAmcCommands()) {
+        for (final String amc : AmcAddon.getAmcCommands()) {
             if (command.startsWith(amc)) {
                 try {
                     if (!file.exists())
-                        //noinspection ALL
                         file.createNewFile();
-                    PrintWriter printWriter = new PrintWriter(new FileWriter("plugins/AdvancedMonthlyCrates/log.txt", true));
+                    final PrintWriter printWriter = new PrintWriter(new FileWriter("plugins/AdvancedMonthlyCrates/log.txt", true));
                     printWriter.println(new SimpleDateFormat("dd/MM/yyyy ss:mm:HH").format(new Date()) + " " + sender + ": " + command);
                     printWriter.close();
                 }
@@ -38,13 +33,13 @@ public class CommandListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
+    public static void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
         if (e.getMessage().length() < 1 || e.getPlayer().isOp()) return;
         writefile(e.getMessage().substring(1).trim(), e.getPlayer().getName());
     }
 
     @EventHandler
-    public void onConsoleCommand(final ServerCommandEvent e) {
+    public static void onConsoleCommand(final ServerCommandEvent e) {
         final String command = e.getCommand().trim();
         if (!command.startsWith("amc")) return;
         writefile(command, "Console");

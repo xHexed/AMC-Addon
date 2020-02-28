@@ -13,7 +13,7 @@ import static org.bukkit.Bukkit.getServer;
 public class Command extends BaseCommand {
     @Subcommand("giveall")
     @CommandCompletion("%pouch 1 true|false")
-    public void onPouchGiveAll(final CommandSender sender, final String crate, @Optional final String number, @Optional final String silent) {
+    public static void onPouchGiveAll(final CommandSender sender, final String crate, @Optional final String number, @Optional final String silent) {
         if (!sender.isOp()) return;
         getServer().getOnlinePlayers().forEach(player -> getServer().dispatchCommand(getServer().getConsoleSender(), "amc pouch " + (silent == null ? "" : (Boolean.parseBoolean(silent) ? "s" : "")) + "give " + player.getName() + " " + crate + " " + (number == null ? 1 : number)));
     }

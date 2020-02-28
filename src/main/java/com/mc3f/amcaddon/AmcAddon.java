@@ -8,6 +8,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Objects;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class AmcAddon extends JavaPlugin {
@@ -19,16 +20,16 @@ public class AmcAddon extends JavaPlugin {
             "amc pouch sgive",
             "pouch giveall");
 
-    @Override
-    public void onEnable() {
-        final PaperCommandManager commandManager = new PaperCommandManager(this);
-        commandManager.getCommandReplacements().addReplacement("pouch", String.join("|", YamlConfiguration.loadConfiguration(new File("plugins/AdvancedMonthlyCrates", "pouches.yml")).getConfigurationSection("Pouches").getKeys(false)));
-        commandManager.registerCommand(new Command());
-        Bukkit.getPluginManager().registerEvents(new CommandListener(this), this);
-    }
+    static ImmutableSet<String> getAmcCommands() { return amc_commands; }
 
     @Override
     public void onDisable() { HandlerList.unregisterAll(this); }
 
-    public final ImmutableSet<String> getAmcCommands() { return amc_commands; }
+    @Override
+    public void onEnable() {
+        final PaperCommandManager commandManager = new PaperCommandManager(this);
+        commandManager.getCommandReplacements().addReplacement("pouch", String.join("|", Objects.requireNonNull(YamlConfiguration.loadConfiguration(new File("plugins/AdvancedMonthlyCrates", "pouches.yml")).getConfigurationSection("Pouches")).getKeys(false)));
+        commandManager.registerCommand(new Command());
+        Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
+    }
 }
