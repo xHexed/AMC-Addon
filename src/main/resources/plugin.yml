@@ -1,4 +1,4 @@
-name: AmcAddon
+name: AMC-Addon
 version: ${project.version}
 author: xHexed
 main: com.mc3f.amcaddon.AmcAddon

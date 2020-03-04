@@ -14,9 +14,8 @@ import java.util.Date;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class CommandListener implements Listener {
-    private static void writefile(final String command, final String sender) {
+    private void writefile(final String command, final String sender) {
         final File file = new File("plugins/AdvancedMonthlyCrates", "log.txt");
-        file.getParentFile().mkdirs();
         for (final String amc : AmcAddon.getAmcCommands()) {
             if (command.startsWith(amc)) {
                 try {
@@ -33,15 +32,15 @@ public class CommandListener implements Listener {
     }
 
     @EventHandler
-    public static void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
-        if (e.getMessage().length() < 1 || e.getPlayer().isOp()) return;
+    public void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
+        if (e.getMessage().length() == 1 || !e.getPlayer().isOp()) return;
         writefile(e.getMessage().substring(1).trim(), e.getPlayer().getName());
     }
 
     @EventHandler
-    public static void onConsoleCommand(final ServerCommandEvent e) {
+    public void onConsoleCommand(final ServerCommandEvent e) {
         final String command = e.getCommand().trim();
-        if (!command.startsWith("amc")) return;
+        if (!command.startsWith("amc") || !command.startsWith("pouch giveall")) return;
         writefile(command, "Console");
     }
 }
