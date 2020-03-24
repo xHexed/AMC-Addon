@@ -14,8 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class CommandListener implements Listener {
+class CommandListener implements Listener {
     private void writefile(final String command, final String sender) {
+        if (AMCAddon.getAmcCommands().stream().noneMatch(command::startsWith)) return;
         final File file = new File("plugins/AdvancedMonthlyCrates", "log.txt");
         try (final OutputStream out = new FastBufferedOutputStream(new FileOutputStream("plugins/AdvancedMonthlyCrates/log.txt", true))) {
             if (!file.exists())
@@ -31,15 +32,11 @@ public class CommandListener implements Listener {
     @EventHandler
     public void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
         if (!e.getPlayer().isOp() || e.getMessage().length() == 1) return;
-        final String command = e.getMessage().substring(1).trim();
-        if (AmcAddon.getAmcCommands().stream().noneMatch(command::startsWith)) return;
-        writefile(command, e.getPlayer().getName());
+        writefile(e.getMessage().substring(1).trim(), e.getPlayer().getName());
     }
 
     @EventHandler
     public void onConsoleCommand(final ServerCommandEvent e) {
-        final String command = e.getCommand().trim();
-        if (AmcAddon.getAmcCommands().stream().noneMatch(command::startsWith)) return;
-        writefile(command, "Console");
+        writefile(e.getCommand().trim(), "Console");
     }
 }

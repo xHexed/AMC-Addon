@@ -10,8 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.Objects;
 
-@SuppressWarnings("SpellCheckingInspection")
-public class AmcAddon extends JavaPlugin {
+class AMCAddon extends JavaPlugin {
     private static final ImmutableSet<String> amc_commands = ImmutableSet.of(
             "amc give",
             "amc sgive",

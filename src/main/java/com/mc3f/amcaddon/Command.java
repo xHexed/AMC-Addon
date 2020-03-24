@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import static org.bukkit.Bukkit.getServer;
 
 @CommandAlias("pouch")
-public class Command extends BaseCommand {
+class Command extends BaseCommand {
     @Subcommand("giveall")
     @CommandCompletion("%pouch 1 true|false")
     public static void onPouchGiveAll(final CommandSender sender, final String crate, @Optional final String number, @Optional final String silent) {
